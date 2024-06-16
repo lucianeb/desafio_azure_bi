@@ -2,7 +2,7 @@
     <span> Processamento de Dados Simplificado com Power BI</span>
 </h1>
 
-## Tecnologias utilizadas no projeto
+## 👩‍💻 Tecnologias utilizadas no projeto
 - <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/microsoftsqlserver.svg" alt="Azure Data Studio" width="40" height="40"/> Azure Data Studio
 
 - <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/powerbi.svg" alt="Power BI" width="40" height="40"/> Power BI
@@ -107,6 +107,9 @@ WHERE Mgr_ssn IS NULL;
 Após a transformação dos dados, o database foi importado pelo Power BI (desktop) no modo de compatibilidade de dados Power Query, para a realização de análise e relatório.
 
 <img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/conexao1.jpg" alt="Conexão Power BI - PowerQuery" width="550" height="330"/>
+
+No BI observamos a estrutura de dados seguinte :
+
 
 
 
