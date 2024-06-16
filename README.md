@@ -95,7 +95,7 @@ WHEN NOT MATCHED THEN
     VALUES (source.Dnumber, source.DepartmentLocation);
 
 ```
-A verificação se há departamentos sem gerente foi realizada da seguinte forma :
+- A verificação se há departamentos sem gerente foi realizada da seguinte forma :
 ```
 -- Verificação de departamentos sem gerente
 -- Adicição de gerente fictício se necessário
@@ -103,12 +103,24 @@ UPDATE azure_company.departament
 SET Mgr_ssn = '888665555'
 WHERE Mgr_ssn IS NULL;
 ```
-
+- O único colaborador sem gerente é James Borg.
+<img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/james.jpg" alt="Colaborador sem gerente" width="800" height="200"/>
+  
 Após a transformação dos dados, o database foi importado pelo Power BI (desktop) no modo de compatibilidade de dados Power Query, para a realização de análise e relatório.
 
 <img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/conexao1.jpg" alt="Conexão Power BI - PowerQuery" width="550" height="330"/>
 
-No BI observamos a estrutura de dados seguinte :
+No BI observamos a estrutura de dados abaixo (visualização parcial) :
+
+<img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/dadosbi.jpg" alt="Importaçao com PowerQuery BI" width="450" height="780"/>
+
+O numero de colaboradore por gerente foi realizado através da consulta :
+```
+SELECT e.Super_ssn AS Gerente_Ssn, CONCAT(m.Fname, ' ', m.Lname) AS Nome_Gerente, COUNT(e.Ssn) AS Numero_Funcionarios
+FROM azure_company.employee e
+LEFT JOIN azure_company.employee m ON e.Super_ssn = m.Ssn
+GROUP BY e.Super_ssn, m.Fname, m.Lname;
+```
 
 
 
