@@ -29,6 +29,129 @@ Inicialmente foram configuradas as regras do firewall para permitir o acesso pub
 - a população foi realizada com o comando sqlcmd -S tcp:powerbiserverclient.database.windows.net,1433 -d desafio_dio -U powerbi -P -i populate_bd_company.sql no power shell  
 
 Os scripts apresentaram alguns problemas que foram selecionados entre eles o nome da coluna Mgr_end_date, sintaxe SQL e comandos não suportados no Azure SQL como SHOW TABLES e DESC.  
+O script corrigido ficou assim :
+```
+-- Criar esquema se não existir
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'azure_company')
+BEGIN
+    EXEC sp_executesql N'CREATE SCHEMA azure_company';
+END;
+
+-- Remover tabelas existentes, se existirem
+IF OBJECT_ID('azure_company.employee', 'U') IS NOT NULL
+    DROP TABLE azure_company.employee;
+
+IF OBJECT_ID('azure_company.departament', 'U') IS NOT NULL
+    DROP TABLE azure_company.departament;
+
+IF OBJECT_ID('azure_company.dept_locations', 'U') IS NOT NULL
+    DROP TABLE azure_company.dept_locations;
+
+IF OBJECT_ID('azure_company.project', 'U') IS NOT NULL
+    DROP TABLE azure_company.project;
+
+IF OBJECT_ID('azure_company.works_on', 'U') IS NOT NULL
+    DROP TABLE azure_company.works_on;
+
+IF OBJECT_ID('azure_company.dependent', 'U') IS NOT NULL
+    DROP TABLE azure_company.dependent;
+
+-- Criar tabela employee no esquema azure_company
+CREATE TABLE azure_company.employee (
+    Fname varchar(15) NOT NULL,
+    Minit char,
+    Lname varchar(15) NOT NULL,
+    Ssn char(9) NOT NULL, 
+    Bdate date,
+    Address varchar(30),
+    Sex char,
+    Salary decimal(10,2),
+    Super_ssn char(9),
+    Dno int NOT NULL,
+    CONSTRAINT chk_salary_employee CHECK (Salary > 2000.0),
+    CONSTRAINT pk_employee PRIMARY KEY (Ssn)
+);
+
+ALTER TABLE azure_company.employee 
+    ADD CONSTRAINT fk_employee 
+    FOREIGN KEY (Super_ssn) REFERENCES azure_company.employee (Ssn)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+CREATE TABLE azure_company.departament (
+    Dname varchar(15) NOT NULL,
+    Dnumber int NOT NULL,
+    Mgr_ssn char(9) NOT NULL,
+    Mgr_start_date date, 
+    Dept_create_date date,
+    CONSTRAINT chk_date_dept CHECK (Dept_create_date < Mgr_start_date),
+    CONSTRAINT pk_dept PRIMARY KEY (Dnumber),
+    CONSTRAINT unique_name_dept UNIQUE (Dname),
+    FOREIGN KEY (Mgr_ssn) REFERENCES azure_company.employee (Ssn)
+);
+
+ALTER TABLE azure_company.departament 
+    DROP CONSTRAINT IF EXISTS departament_ibfk_1;
+
+ALTER TABLE azure_company.departament 
+    ADD CONSTRAINT fk_dept FOREIGN KEY (Mgr_ssn) REFERENCES azure_company.employee (Ssn)
+    ON UPDATE CASCADE;
+
+CREATE TABLE azure_company.dept_locations (
+    Dnumber int NOT NULL,
+    Dlocation varchar(15) NOT NULL,
+    CONSTRAINT pk_dept_locations PRIMARY KEY (Dnumber, Dlocation),
+    CONSTRAINT fk_dept_locations FOREIGN KEY (Dnumber) REFERENCES azure_company.departament (Dnumber)
+);
+
+ALTER TABLE azure_company.dept_locations 
+    DROP CONSTRAINT IF EXISTS fk_dept_locations;
+
+ALTER TABLE azure_company.dept_locations 
+    ADD CONSTRAINT fk_dept_locations FOREIGN KEY (Dnumber) REFERENCES azure_company.departament (Dnumber)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+CREATE TABLE azure_company.project (
+    Pname varchar(15) NOT NULL,
+    Pnumber int NOT NULL,
+    Plocation varchar(15),
+    Dnum int NOT NULL,
+    PRIMARY KEY (Pnumber),
+    CONSTRAINT unique_project UNIQUE (Pname),
+    CONSTRAINT fk_project FOREIGN KEY (Dnum) REFERENCES azure_company.departament (Dnumber)
+);
+
+CREATE TABLE azure_company.works_on (
+    Essn char(9) NOT NULL,
+    Pno int NOT NULL,
+    Hours decimal(3,1) NOT NULL,
+    PRIMARY KEY (Essn, Pno),
+    CONSTRAINT fk_employee_works_on FOREIGN KEY (Essn) REFERENCES azure_company.employee (Ssn),
+    CONSTRAINT fk_project_works_on FOREIGN KEY (Pno) REFERENCES azure_company.project (Pnumber)
+);
+
+DROP TABLE IF EXISTS azure_company.dependent;
+
+CREATE TABLE azure_company.dependent (
+    Essn char(9) NOT NULL,
+    Dependent_name varchar(15) NOT NULL,
+    Sex char,
+    Bdate date,
+    Relationship varchar(8),
+    PRIMARY KEY (Essn, Dependent_name),
+    CONSTRAINT fk_dependent FOREIGN KEY (Essn) REFERENCES azure_company.employee (Ssn)
+);
+
+SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'azure_company';
+
+EXEC sp_columns @table_name = 'employee', @table_owner = 'azure_company';
+EXEC sp_columns @table_name = 'departament', @table_owner = 'azure_company';
+EXEC sp_columns @table_name = 'dept_locations', @table_owner = 'azure_company';
+EXEC sp_columns @table_name = 'project', @table_owner = 'azure_company';
+EXEC sp_columns @table_name = 'works_on', @table_owner = 'azure_company';
+EXEC sp_columns @table_name = 'dependent', @table_owner = 'azure_company';
+```
 
 - As correções foram realizadas e os dados foram importados para o Azure Data Studio para transformação e manipulação, foi criado uma tabela employee com o nome dos departamentos associados aos colaboradores assim como dos colaboradores com seus respectivos gerentes.
 
@@ -121,6 +244,8 @@ FROM azure_company.employee e
 LEFT JOIN azure_company.employee m ON e.Super_ssn = m.Ssn
 GROUP BY e.Super_ssn, m.Fname, m.Lname;
 ```
+## Arquivo BI do desafio 
+O arquivo gerado para caracterização dso dados pode ser acessado em : https://github.com/lucianeb/desafio_azure_bi/blob/main/relatorio_desafio_azure_bi_dio.pbix
 
 ## 🌐 Alguma dúvida ?
 
