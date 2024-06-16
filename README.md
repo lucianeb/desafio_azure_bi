@@ -122,6 +122,10 @@ LEFT JOIN azure_company.employee m ON e.Super_ssn = m.Ssn
 GROUP BY e.Super_ssn, m.Fname, m.Lname;
 ```
 
+## 🌐 Alguma dúvida ?
+
+[![Gmail](https://img.shields.io/badge/Gmail-333333?style=for-the-badge&logo=gmail&logoColor=red)](mailto:lurutilae@gmail.com)
+
 
 
 
