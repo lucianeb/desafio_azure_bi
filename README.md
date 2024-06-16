@@ -19,10 +19,12 @@ Inicialmente foram configuradas as regras do firewall para permitir o acesso pub
 - a criação do database foi realizada com o comando sqlcmd -S tcp:powerbiserverclient.database.windows.net,1433 -d desafio_dio -U powerbi -P -i script_bd_company.sql no power shell
 - a população foi realizada com o comando sqlcmd -S tcp:powerbiserverclient.database.windows.net,1433 -d desafio_dio -U powerbi -P -i populate_bd_company.sql no power shell  
 
-Os scripts apresentaram alguns problemas que foram selecionados entre eles o nome da coluna Mgr_end_date, sintaxe SQL e comandos não suportados no Azure SQL.  
+Os scripts apresentaram alguns problemas que foram selecionados entre eles o nome da coluna Mgr_end_date, sintaxe SQL e comandos não suportados no Azure SQL como SHOW TABLES e DESC.  
 
 Os dados foram importados para o Azure Studio para transformação.
 <img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/azure_db.jpg" alt="Criacao da instancia Azure" width="1200" height="200"/>
+
+
 
 
 
