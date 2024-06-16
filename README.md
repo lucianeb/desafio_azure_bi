@@ -21,8 +21,22 @@ Inicialmente foram configuradas as regras do firewall para permitir o acesso pub
 
 Os scripts apresentaram alguns problemas que foram selecionados entre eles o nome da coluna Mgr_end_date, sintaxe SQL e comandos não suportados no Azure SQL como SHOW TABLES e DESC.  
 
-Os dados foram importados para o Azure Studio para transformação.
-<img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/azure_db.jpg" alt="Criacao da instancia Azure" width="1200" height="200"/>
+- As correções foram realizadas e os dados foram importados para o Azure Data Studio para transformação e manipulação, foi criado uma tabela employee com o nome dos departamentos associados aos colaboradores assim como dos colaboradores com seus respectivos gerentes.
+
+<img src="https://github.com/lucianeb/desafio_azure_bi/blob/main/azure_studio_tables.jpg" alt="Criacao da instancia Azure" width="1000" height="400"/>
+
+Após a transformação dos dados, o database foi importado pelo Power BI (desktop) para a realização de análise e relatório.
+
+
+
+## Tecnologias utilizadas no projeto
+- <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/microsoftsqlserver.svg" alt="Azure Data Studio" width="40" height="40"/> Azure Data Studio
+
+- <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/powerbi.svg" alt="Power BI" width="40" height="40"/> Power BI
+  
+- <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/visualstudio.svg" alt="Visual Studio" width="40" height="40"/> Visual Studio Visual Studio
+
+- <img src="https://github.com/simple-icons/simple-icons/blob/develop/icons/microsoftazure.svg" alt="Azure" width="40" height="40"/> Microsoft Azure
 
 
 
