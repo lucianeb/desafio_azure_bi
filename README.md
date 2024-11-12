@@ -3,13 +3,13 @@
 </h1>
 
 ## 👩‍💻 Tecnologias utilizadas no projeto
-- <img src="https://learn.microsoft.com/en-us/azure/architecture/icons/media/azure-data-studio.svg" alt="Azure Data Studio" width="40" height="40"/> Azure Data Studio
+- <img src="https://github.com/lucianeb/icons/blob/main/azure_data_studio.jpg" alt="Azure Data Studio" width="40" height="40"/> Azure Data Studio
 
 - <img src="https://github.com/microsoft/PowerBI-Icons/blob/main/SVG/Power-BI.svg" alt="Power BI" width="40" height="40"/> Power BI
 
-- <img src="https://cdn.simpleicons.org/visualstudio" alt="Visual Studio" width="40" height="40"/> Visual Studio
+- <img src="https://github.com/lucianeb/icons/blob/main/visualst.png" alt="Visual Studio" width="40" height="40"/> Visual Studio
 
-- <img src="https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Microsoft%20Azure.svg" alt="Microsoft Azure" width="40" height="40"/> Microsoft Azure
+- <img src="https://github.com/lucianeb/icons/blob/main/azure.png" alt="Microsoft Azure" width="40" height="40"/> Microsoft Azure
 
 ## 📒 Descrição
 Descrição do desafio módulo 3 – Processamento de Dados Simplificado com Power BI
