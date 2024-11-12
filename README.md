@@ -245,7 +245,7 @@ LEFT JOIN azure_company.employee m ON e.Super_ssn = m.Ssn
 GROUP BY e.Super_ssn, m.Fname, m.Lname;
 ```
 ## Arquivo BI do desafio 
-O arquivo gerado para caracterização dso dados pode ser acessado em : https://github.com/lucianeb/desafio_azure_bi/blob/main/relatorio_desafio_azure_bi_dio.pbix
+O arquivo gerado para caracterização dos dados pode ser acessado em : https://github.com/lucianeb/desafio_azure_bi/blob/main/relatorio_desafio_azure_bi_dio.pbix
 
 ## 🌐 Alguma dúvida ?
 
